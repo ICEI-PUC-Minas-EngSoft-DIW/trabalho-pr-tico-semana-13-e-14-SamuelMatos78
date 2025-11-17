@@ -1,180 +1,137 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>📚 Estatísticas de Livros — Leaflet + Chart.js</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estatísticas - Livraria Leitor Ávido</title>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
   <style>
-    body { font-family: Georgia, serif; background: #f5f5dc; color: #222; }
-    main { max-width: 1100px; margin: 28px auto; }
-    .card { background:#fffef0; border:1px solid #4B3621; padding:16px; border-radius:8px; margin-bottom:18px; }
-    .charts { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; }
-    .chart-box { flex:1 1 520px; min-width:300px; height:360px; }
-    #mapa { width:100%; height:480px; border-radius:8px; }
-    small.text-muted { color:#666; }
+    #mapa {
+      height: 450px;
+      width: 100%;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1 style="text-align:center">📚 Estatísticas de Livros</h1>
 
-    <div class="card charts">
-      <div class="chart-box">
-        <h4>Livros por categoria</h4>
+  <!-- Navbar igual ao resto do site -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark-brown">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Leitor Ávido</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#noticias">Notícias Literárias</a></li>
+          <li class="nav-item"><a class="nav-link" href="recomendados.html">Livros Recomendados</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#curiosidades">Curiosidades</a></li>
+          <li class="nav-item"><a class="nav-link active" href="estatisticas.html">Estatísticas</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Entrar/Registrar</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="container my-5">
+    <h2 class="text-center mb-4">📊 Estatísticas Gerais</h2>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-center">Livros por Categoria</h4>
         <canvas id="graficoCategorias"></canvas>
       </div>
 
-      <div class="chart-box">
-        <h4>Média de notas por ano</h4>
+      <div class="col-md-6">
+        <h4 class="text-center">Média de Notas por Ano</h4>
         <canvas id="graficoNotas"></canvas>
       </div>
     </div>
 
-    <div class="card">
-      <h4>Mapa de Origem dos Livros</h4>
-      <div id="mapa"></div>
-      <small class="text-muted">Clique nos marcadores para ver título / autor. Se um livro não tiver coords, é tentado um centróide por país.</small>
-    </div>
+    <h3 class="mt-5 text-center">🌍 Mapa de Origem dos Autores</h3>
+    <div id="mapa"></div>
 
-    <div class="card" id="resumoTabela"></div>
-  </main>
+  </div>
 
-<script>
-const API_BASE = 'http://localhost:3000'; // <-- seus endpoints
 
-// centróides simples para fallback quando não houver coords no item
-const countryCentroids = {
-  'Brasil': [-47.8825, -15.7942],
-  'Reino Unido': [-0.1276, 51.5074],
-  'Estados Unidos': [-98.5795, 39.8283],
-  'Rússia': [37.6173, 55.7558],
-  'França': [2.2137, 46.2276],
-  'Japão': [139.6917, 35.6895],
-  'China': [116.4074, 39.9042],
-  'Portugal': [-8.2245, 39.3999],
-  'Alemanha': [10.4515, 51.1657]
-};
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-function parseCoords(coords) {
-  // aceita array [lng, lat] ou objeto {lat, lng}
-  if (!coords) return null;
-  if (Array.isArray(coords) && coords.length >= 2) return [coords[1], coords[0]]; // Leaflet usa [lat, lng]
-  if (coords.lat !== undefined && coords.lng !== undefined) return [coords.lat, coords.lng];
-  if (coords[0] !== undefined && coords[1] !== undefined) return [coords[1], coords[0]];
-  return null;
-}
+  <script>
+    async function fetchAPI(endpoint) {
+      const res = await fetch(`http://localhost:3000/${endpoint}`);
+      return res.json();
+    }
 
-function countryToLatLng(country) {
-  const c = countryCentroids[country];
-  if (!c) return null;
-  // countryCentroids armazenado como [lng, lat]
-  return [c[1], c[0]];
-}
+    Promise.all([
+      fetchAPI('livros'),
+      fetchAPI('curiosidades'),
+      fetchAPI('noticias')
+    ]).then(([livros, curiosidades, noticias]) => {
 
-async function fetchJSON(path) {
-  try {
-    const res = await fetch(`${API_BASE}/${path}`);
-    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-    return await res.json();
-  } catch (err) {
-    console.error(`Erro ao buscar ${path}:`, err);
-    throw err;
-  }
-}
+      // ---------- Grafico categorias ----------
+      const categorias = {};
+      livros.forEach(l => categorias[l.categoria] = (categorias[l.categoria] || 0) + 1);
 
-async function montarTudo() {
-  // busca os endpoints corretos
-  const livros = await fetchJSON('livros').catch(() => []);
-  // opcional: curiosidades / noticias se precisar
-  // const curiosidades = await fetchJSON('curiosidades').catch(() => []);
-  // const noticias = await fetchJSON('noticias').catch(() => []);
+      new Chart(document.getElementById("graficoCategorias"), {
+        type: 'pie',
+        data: {
+          labels: Object.keys(categorias),
+          datasets: [{ data: Object.values(categorias) }]
+        }
+      });
 
-  // --- Gráfico: categorias (pizza) ---
-  const categoriaCounts = {};
-  livros.forEach(l => {
-    const cat = l.categoria || 'Desconhecido';
-    categoriaCounts[cat] = (categoriaCounts[cat]||0) + 1;
-  });
-  new Chart(document.getElementById('graficoCategorias'), {
-    type: 'pie',
-    data: { labels: Object.keys(categoriaCounts), datasets: [{ data: Object.values(categoriaCounts) }] },
-    options: { maintainAspectRatio:false }
-  });
+      // ---------- Média de notas por ano ----------
+      const porAno = {};
+      livros.forEach(l => {
+        if (!porAno[l.ano_publicacao]) porAno[l.ano_publicacao] = [];
+        porAno[l.ano_publicacao].push(l.nota);
+      });
 
-  // --- Gráfico: média de notas por ano (barras) ---
-  const anos = {};
-  livros.forEach(l => {
-    if (!l.ano_publicacao || l.nota === undefined || l.nota === null) return;
-    const ano = String(l.ano_publicacao);
-    if (!anos[ano]) anos[ano] = { sum:0, count:0 };
-    anos[ano].sum += Number(l.nota);
-    anos[ano].count += 1;
-  });
-  const anosKeys = Object.keys(anos).sort((a,b)=>a-b);
-  const medias = anosKeys.map(a => +(anos[a].sum / anos[a].count).toFixed(2));
-  new Chart(document.getElementById('graficoNotas'), {
-    type: 'bar',
-    data: { labels: anosKeys, datasets: [{ label: 'Média', data: medias }] },
-    options: { maintainAspectRatio:false, scales: { y: { beginAtZero:true } } }
-  });
+      const anos = Object.keys(porAno).sort();
+      const medias = anos.map(a => porAno[a].reduce((a, b) => a + b) / porAno[a].length);
 
-  // --- Mapa Leaflet ---
-  const mapa = L.map('mapa').setView([10,0], 2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap'
-  }).addTo(mapa);
+      new Chart(document.getElementById("graficoNotas"), {
+        type: 'bar',
+        data: {
+          labels: anos,
+          datasets: [{ data: medias }]
+        }
+      });
 
-  // agrupar por país para a tabela de resumo
-  const paisCounts = {}; // {pais: {count, titles[], latlng?}}
-  livros.forEach(l => {
-    const pais = l.pais_origem || 'Desconhecido';
-    if (!paisCounts[pais]) paisCounts[pais] = { count:0, titles: [], latlng: null };
-    paisCounts[pais].count += 1;
-    paisCounts[pais].titles.push(l.titulo);
+      // ---------- Mapa ----------
+      const mapa = L.map('mapa').setView([0, 0], 2);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+      }).addTo(mapa);
 
-    // tenta coords: aceita array [lng,lat] ou objeto {lat,lng}
-    let latlng = parseCoords(l.coords);
-    if (!latlng && l.coords && Array.isArray(l.coords) && l.coords.length===2) latlng = parseCoords(l.coords); // redundância segura
-    if (!latlng) latlng = countryToLatLng(pais); // fallback centróide por país
-    if (latlng) paisCounts[pais].latlng = latlng;
-  });
+      livros.forEach(l => {
+        if (l.coords) {
+          L.marker([l.coords.lat, l.coords.lng])
+            .addTo(mapa)
+            .bindPopup(`<b>${l.titulo}</b><br>${l.autor}<br>${l.pais_origem}`);
+        }
+      });
 
-  // adiciona marcadores por país (usando latlng do resumo)
-  Object.entries(paisCounts).forEach(([pais, info]) => {
-    if (!info.latlng) return; // ignora países totalmente sem posição
-    const marker = L.circleMarker(info.latlng, { radius: 8, fillColor:'#8b4702', color:'#4B3621', weight:1, fillOpacity:0.9 });
-    marker.addTo(mapa).bindPopup(`<strong>${pais}</strong><br/>Quantidade: ${info.count}<br/><small>${info.titles.slice(0,6).join(', ')}${info.titles.length>6?'...':''}</small>`);
-  });
+    });
+  </script>
 
-  // montar tabela resumo simples
-  const resumo = document.getElementById('resumoTabela');
-  const rows = Object.entries(paisCounts).map(([pais, info]) =>
-    `<tr><td>${pais}</td><td>${info.count}</td><td>${info.titles.slice(0,10).join(', ')}</td></tr>`
-  ).join('');
-  resumo.innerHTML = `<h4>Resumo por país</h4>
-    <div style="overflow:auto">
-      <table style="width:100%; border-collapse:collapse;">
-        <thead><tr style="text-align:left"><th>País</th><th>Quantidade</th><th>Títulos (até 10)</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  montarTudo().catch(err => {
-    console.error('Erro ao montar a página:', err);
-    alert('Erro ao carregar dados. Veja o console para detalhes.');
-  });
-});
-</script>
 </body>
 </html>
