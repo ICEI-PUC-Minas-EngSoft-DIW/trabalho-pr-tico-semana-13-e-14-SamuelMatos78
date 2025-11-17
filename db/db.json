@@ -1,84 +1,77 @@
 {
-  "livros": [
-    {
-      "id": "1",
-      "titulo": "Harry Potter e a Pedra Filosofal",
-      "autor": "J.K. Rowling",
-      "categoria": "Fantasia",
-      "sinopse": "As aventuras iniciais de um jovem bruxo descobrindo um mundo mágico.",
-      "capa_url": "img/capa_harry.jpg",
-      "lancamento": false,
-      "best_seller": true
-    },
-    {
-      "id": "2",
-      "titulo": "1984",
-      "autor": "George Orwell",
-      "categoria": "Distopia",
-      "sinopse": "Uma sociedade totalitária onde a vigilância constante molda a realidade das pessoas.",
-      "capa_url": "img/capa_1984.jpg",
-      "lancamento": false,
-      "best_seller": true
-    },
-    {
-      "id": "3",
-      "titulo": "Noites Brancas",
-      "autor": "Fyodor Dostoevsky",
-      "categoria": "Não-Ficção",
-      "sinopse": "\"Noites Brancas\" é um clássico russo curto, rápido e muito gostoso de ler, mas cheio de profundidade.",
-      "capa_url": "img/capa_noites.jpg",
-      "lancamento": false,
-      "best_seller": false
-    },
-    {
-      "id": "4",
-      "titulo": "A História da Guerra Fria - Sem Mitos (Volume 1)",
-      "autor": "Marcelo Andrade",
-      "categoria": "História",
-      "sinopse": "A história da Guerra Fria de um jeito nunca explicado.",
-      "capa_url": "img/capa_Guerra_fria.jpg",
-      "lancamento": false,
-      "best_seller": false
-    }
-  ],
-  "curiosidades": [
-    {
-      "id": "1",
-      "titulo": "Você Sabia?",
-      "texto": "O livro mais vendido de todos os tempos, excluindo textos religiosos e políticos, é 'Dom Quixote', de Miguel de Cervantes.",
-      "fonte": "Curiosidades Literárias"
-    }
-  ],
-  "noticias": [
-    {
-      "id": "N1",
-      "titulo": "Revisor do Livro Folclore-se morre hoje",
-      "texto": "Esta notícia é uma homenagem a um querido professor do IF, que deixou saudades. Ele sempre incentivou e ajudou diversos alunos, muitas vezes sacrificando seu tempo pessoal para apoiar os sonhos de cada um, mostrando dedicação e generosidade exemplar.",
-      "sub_texto": "Uma homenagem ao falecido hoje (dia 19) professor exemplar de Letras.",
-      "imagem_url": "img/not_wanderson.jpg",
-      "data": "19/10/2025",
-      "fonte": "G1",
-      "link": "https://g1.globo.com/google/amp/mg/vales-mg/noticia/2025/10/19/motociclista-morre-apos-bater-em-uma-vaca-na-br-259-em-governador-valadares.ghtml"
-    },
-    {
-      "id": "N2",
-      "titulo": "Adaptação de 'Duna' ganha nova edição ilustrada",
-      "texto": "Com o sucesso do filme, a editora lança uma edição de luxo com ilustrações inéditas e capa dura.",
-      "sub_texto": "Uma nova edição de 'Duna' chega às livrarias com ilustrações inéditas e capa dura.",
-      "imagem_url": "img/noticia_duna.jpg",
-      "data": "17/10/2025",
-      "fonte": "o dia",
-      "link": "https://odia.ig.com.br/diversao/virando-a-pagina/2021/01/6067412-boletim-literario-duna-ganha-edicao-em-quadrinhos.html"
-    },
-    {
-      "id": "N3",
-      "titulo": "Feira Internacional do Livro de São Paulo tem recorde de visitantes",
-      "texto": "Mais de 800 mil pessoas visitaram o evento, que contou com autores de 12 países diferentes.",
-      "sub_texto": "A Feira Internacional do Livro de São Paulo bateu recorde de público este ano.",
-      "imagem_url": "img/noticia_feira.jpg",
-      "data": "14/10/2025",
-      "fonte": "cnn",
-      "link": "https://www.cnnbrasil.com.br/entretenimento/bienal-do-livro-tem-maior-publico-em-10-anos-com-mais-700-mil-visitantes/"
-    }
-  ]
+"livros": [
+{
+"id": "1",
+"titulo": "Harry Potter e a Pedra Filosofal",
+"autor": "J.K. Rowling",
+"categoria": "Fantasia",
+"sinopse": "As aventuras iniciais de um jovem bruxo.",
+"capa_url": "img/capa_harry.jpg",
+"lancamento": false,
+"best_seller": true,
+"pais_origem": "Reino Unido",
+"idioma": "Inglês",
+"ano_publicacao": 1997,
+"nota": 9.1,
+"coords": [-0.1276, 51.5074]
+},
+{
+"id": "2",
+"titulo": "1984",
+"autor": "George Orwell",
+"categoria": "Distopia",
+"sinopse": "Sociedade totalitária sob vigilância.",
+"capa_url": "img/capa_1984.jpg",
+"lancamento": false,
+"best_seller": true,
+"pais_origem": "Reino Unido",
+"idioma": "Inglês",
+"ano_publicacao": 1949,
+"nota": 9.0,
+"coords": [-0.1276, 51.5074]
+},
+{
+"id": "3",
+"titulo": "Noites Brancas",
+"autor": "Fyodor Dostoevsky",
+"categoria": "Ficção",
+"sinopse": "Clássico russo curto e profundo.",
+"capa_url": "img/capa_noites.jpg",
+"lancamento": false,
+"best_seller": false,
+"pais_origem": "Rússia",
+"idioma": "Russo",
+"ano_publicacao": 1848,
+"nota": 8.2,
+"coords": [37.6173, 55.7558]
+},
+{
+"id": "4",
+"titulo": "A História da Guerra Fria - Sem Mitos (Volume 1)",
+"autor": "Marcelo Andrade",
+"categoria": "História",
+"sinopse": "A Guerra Fria explicada de forma acessível.",
+"capa_url": "img/capa_Guerra_fria.jpg"
+}
+],
+"curiosidades": [
+{
+"id": "1",
+"titulo": "Você Sabia?",
+"texto": "O livro mais vendido de todos os tempos...",
+"fonte": "Curiosidades Literárias"
+}
+],
+"noticias": [
+{
+"id": "N1",
+"titulo": "Revisor do Livro Folclore-se morre hoje",
+"texto": "Esta notícia é uma homenagem...",
+"sub_texto": "Uma homenagem ao falecido...",
+"imagem_url": "img/not_wanderson.jpg",
+"data": "19/10/2025",
+"fonte": "G1",
+"link": "https://g1.globo.com/..."
+}
+]
 }
