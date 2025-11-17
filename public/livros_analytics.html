@@ -1,137 +1,202 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estatísticas - Livraria Leitor Ávido</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estatísticas - Livraria Leitor Ávido</title>
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
-  <style>
-    #mapa {
-      height: 450px;
-      width: 100%;
-      border-radius: 12px;
-      margin-top: 20px;
-    }
-  </style>
+    <style>
+        #mapa {
+            height: 450px;
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        #graficoCategorias,
+        #graficoNotas {
+            height: 320px !important;
+            max-height: 320px !important;
+        }
+    </style>
 </head>
+
 <body>
 
-  <!-- Navbar igual ao resto do site -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark-brown">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">Leitor Ávido</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#noticias">Notícias Literárias</a></li>
-          <li class="nav-item"><a class="nav-link" href="recomendados.html">Livros Recomendados</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#curiosidades">Curiosidades</a></li>
-          <li class="nav-item"><a class="nav-link active" href="estatisticas.html">Estatísticas</a></li>
-          <li class="nav-item"><a class="nav-link" href="login.html">Entrar/Registrar</a></li>
-        </ul>
-      </div>
+    <!-- Navbar igual ao resto do site -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-brown">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Leitor Ávido</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#noticias">Notícias Literárias</a></li>
+                    <li class="nav-item"><a class="nav-link" href="recomendados.html">Livros Recomendados</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#curiosidades">Curiosidades</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="estatisticas.html">Estatísticas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Entrar/Registrar</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">📊 Estatísticas Gerais</h2>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="text-center">Livros por Categoria</h4>
+                <canvas id="graficoCategorias"></canvas>
+            </div>
+
+            <div class="col-md-6">
+                <h4 class="text-center">Média de Notas por Ano</h4>
+                <canvas id="graficoNotas"></canvas>
+            </div>
+        </div>
+
+        <h3 class="mt-5 text-center">🌍 Mapa de Origem dos Autores recomendados</h3>
+        <div id="mapa"></div>
+
     </div>
-  </nav>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <div class="container my-5">
-    <h2 class="text-center mb-4">📊 Estatísticas Gerais</h2>
-
-    <div class="row">
-      <div class="col-md-6">
-        <h4 class="text-center">Livros por Categoria</h4>
-        <canvas id="graficoCategorias"></canvas>
-      </div>
-
-      <div class="col-md-6">
-        <h4 class="text-center">Média de Notas por Ano</h4>
-        <canvas id="graficoNotas"></canvas>
-      </div>
-    </div>
-
-    <h3 class="mt-5 text-center">🌍 Mapa de Origem dos Autores</h3>
-    <div id="mapa"></div>
-
-  </div>
-
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    async function fetchAPI(endpoint) {
-      const res = await fetch(`http://localhost:3000/${endpoint}`);
-      return res.json();
-    }
-
-    Promise.all([
-      fetchAPI('livros'),
-      fetchAPI('curiosidades'),
-      fetchAPI('noticias')
-    ]).then(([livros, curiosidades, noticias]) => {
-
-      // ---------- Grafico categorias ----------
-      const categorias = {};
-      livros.forEach(l => categorias[l.categoria] = (categorias[l.categoria] || 0) + 1);
-
-      new Chart(document.getElementById("graficoCategorias"), {
-        type: 'pie',
-        data: {
-          labels: Object.keys(categorias),
-          datasets: [{ data: Object.values(categorias) }]
+    <script>
+        // util: converte coords do JSON para [lat, lng] usado pelo Leaflet
+        function toLatLng(coords) {
+            if (!coords) return null;
+            if (Array.isArray(coords) && coords.length >= 2) {
+                // assume [lng, lat] no JSON → converte para [lat, lng]
+                return [Number(coords[1]), Number(coords[0])];
+            }
+            if (coords.lat !== undefined && coords.lng !== undefined) {
+                return [Number(coords.lat), Number(coords.lng)];
+            }
+            return null;
         }
-      });
 
-      // ---------- Média de notas por ano ----------
-      const porAno = {};
-      livros.forEach(l => {
-        if (!porAno[l.ano_publicacao]) porAno[l.ano_publicacao] = [];
-        porAno[l.ano_publicacao].push(l.nota);
-      });
-
-      const anos = Object.keys(porAno).sort();
-      const medias = anos.map(a => porAno[a].reduce((a, b) => a + b) / porAno[a].length);
-
-      new Chart(document.getElementById("graficoNotas"), {
-        type: 'bar',
-        data: {
-          labels: anos,
-          datasets: [{ data: medias }]
+        async function fetchAPI(endpoint) {
+            const res = await fetch(`http://localhost:3000/${endpoint}`);
+            if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText} ao buscar ${endpoint}`);
+            return res.json();
         }
-      });
 
-      // ---------- Mapa ----------
-      const mapa = L.map('mapa').setView([0, 0], 2);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-      }).addTo(mapa);
+        Promise.all([
+            fetchAPI('livros'),
+            fetchAPI('curiosidades'),
+            fetchAPI('noticias')
+        ]).then(([livros, curiosidades, noticias]) => {
+            try {
+                // ---------- Gráfico categorias ----------
+                const categorias = {};
+                livros.forEach(l => {
+                    const cat = l.categoria || 'Desconhecido';
+                    categorias[cat] = (categorias[cat] || 0) + 1;
+                });
 
-      livros.forEach(l => {
-        if (l.coords) {
-          L.marker([l.coords.lat, l.coords.lng])
-            .addTo(mapa)
-            .bindPopup(`<b>${l.titulo}</b><br>${l.autor}<br>${l.pais_origem}`);
-        }
-      });
+                new Chart(document.getElementById("graficoCategorias"), {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(categorias),
+                        datasets: [{ data: Object.values(categorias) }]
+                    },
+                    options: { maintainAspectRatio: false }
+                });
 
-    });
-  </script>
+                // ---------- Média de notas por ano ----------
+                const porAno = {};
+                livros.forEach(l => {
+                    // pular se faltar ano ou nota
+                    if (!l.ano_publicacao || l.nota === undefined || l.nota === null) return;
+                    const ano = String(l.ano_publicacao);
+                    if (!porAno[ano]) porAno[ano] = [];
+                    porAno[ano].push(Number(l.nota));
+                });
+
+                const anos = Object.keys(porAno).sort((a, b) => Number(a) - Number(b));
+                const medias = anos.map(a => {
+                    const arr = porAno[a];
+                    const sum = arr.reduce((acc, v) => acc + v, 0);
+                    return +(sum / arr.length).toFixed(2);
+                });
+
+                new Chart(document.getElementById("graficoNotas"), {
+                    type: 'bar',
+                    data: {
+                        labels: anos,
+                        datasets: [{
+                            label: 'Média de Nota',
+                            data: medias,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+                });
+
+                // ---------- Mapa ----------
+                const mapa = L.map('mapa').setView([10, 0], 2);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; OpenStreetMap'
+                }).addTo(mapa);
+
+                // adiciona marcadores; aceita coords em array [lng,lat] ou objeto {lat,lng}
+                livros.forEach(l => {
+                    const latlng = toLatLng(l.coords);
+                    if (latlng) {
+                        L.marker(latlng)
+                            .addTo(mapa)
+                            .bindPopup(`<b>${l.titulo}</b><br>${l.autor || ''}<br>${l.pais_origem || ''}`);
+                    } else {
+                        // tenta um centróide simples por país (se quiser, pode expandir lista)
+                        const centroids = {
+                            'Brasil': [-15.7942, -47.8825],
+                            'Reino Unido': [51.5074, -0.1276],
+                            'Estados Unidos': [39.8283, -98.5795],
+                            'Rússia': [55.7558, 37.6173],
+                            'Chipre': [35.1264, 33.4299],
+                        };
+                        const pais = l.pais_origem;
+                        if (pais && centroids[pais]) {
+                            L.marker(centroids[pais])
+                                .addTo(mapa)
+                                .bindPopup(`<b>${l.titulo}</b><br>${l.autor || ''}<br>${pais}`);
+                        } else {
+                            // sem coords nem centróide conhecido — pula
+                            console.warn('Livro sem coords e sem centróide conhecido:', l.titulo);
+                        }
+                    }
+                });
+
+            } catch (err) {
+                console.error('Erro ao montar gráficos/mapa:', err);
+                alert('Ocorreu um erro ao montar estatísticas — veja o console para detalhes.');
+            }
+        }).catch(err => {
+            console.error('Erro ao buscar dados da API:', err);
+            alert('Não foi possível carregar dados do servidor. Certifique-se que o json-server está rodando em http://localhost:3000');
+        });
+    </script>
 
 </body>
+
 </html>

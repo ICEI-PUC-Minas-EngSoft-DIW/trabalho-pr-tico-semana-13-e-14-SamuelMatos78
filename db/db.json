@@ -52,7 +52,68 @@
 "categoria": "História",
 "sinopse": "A Guerra Fria explicada de forma acessível.",
 "capa_url": "img/capa_Guerra_fria.jpg"
+},
+{
+  "id": "5",
+  "titulo": "A Sutil Arte de Ligar o F*da-se",
+  "autor": "Mark Manson",
+  "categoria": "Autoajuda",
+  "sinopse": "Um guia prático e direto sobre como viver melhor focando no que realmente importa.",
+  "capa_url": "img/capa_sutil_arte.jpg",
+  "lancamento": false,
+  "best_seller": true,
+  "pais_origem": "Estados Unidos",
+  "idioma": "Inglês",
+  "ano_publicacao": 2016,
+  "nota": 8.7,
+  "coords": [-118.2437, 34.0522]
+},
+{
+  "id": "6",
+  "titulo": "O Hobbit",
+  "autor": "J.R.R. Tolkien",
+  "categoria": "Fantasia",
+  "sinopse": "A aventura de Bilbo Bolseiro em uma jornada inesperada pela Terra-média.",
+  "capa_url": "img/capa_hobbit.jpg",
+  "lancamento": false,
+  "best_seller": true,
+  "pais_origem": "Reino Unido",
+  "idioma": "Inglês",
+  "ano_publicacao": 1937,
+  "nota": 9.2,
+  "coords": [-0.1276, 51.5074]
+},
+{
+  "id": "7",
+  "titulo": "A Paciente Silenciosa",
+  "autor": "Alex Michaelides",
+  "categoria": "Suspense",
+  "sinopse": "Uma mulher que para de falar após um crime terrível, e o psicoterapeuta determinado a descobrir a verdade.",
+  "capa_url": "img/capa_paciente_silenciosa.jpg",
+  "lancamento": false,
+  "best_seller": true,
+  "pais_origem": "Chipre",
+  "idioma": "Inglês",
+  "ano_publicacao": 2019,
+  "nota": 8.5,
+  "coords": [33.3667, 35.1667]
+},
+{
+  "id": "8",
+  "titulo": "Hábitos Atômicos",
+  "autor": "James Clear",
+  "categoria": "Desenvolvimento Pessoal",
+  "sinopse": "Como pequenas mudanças diárias podem gerar resultados extraordinários.",
+  "capa_url": "img/capa_habitos_atomicos.jpg",
+  "lancamento": false,
+  "best_seller": true,
+  "pais_origem": "Estados Unidos",
+  "idioma": "Inglês",
+  "ano_publicacao": 2018,
+  "nota": 9.3,
+  "coords": [-83.0458, 42.3314]
 }
+
 ],
 "curiosidades": [
 {
@@ -63,15 +124,36 @@
 }
 ],
 "noticias": [
-{
-"id": "N1",
-"titulo": "Revisor do Livro Folclore-se morre hoje",
-"texto": "Esta notícia é uma homenagem...",
-"sub_texto": "Uma homenagem ao falecido...",
-"imagem_url": "img/not_wanderson.jpg",
-"data": "19/10/2025",
-"fonte": "G1",
-"link": "https://g1.globo.com/..."
-}
+  {
+    "id": "N1",
+    "titulo": "Feira do Livro anuncia os primeiros 40 autores para a edição de 2025",
+    "texto": "A Feira do Livro de São Paulo 2025 confirmou 40 autores convidados, incluindo nomes como Drauzio Varella, Marcelo Rubens Paiva e Lázaro Ramos, entre outros, para o evento que será realizado na Praça Charles Miller em junho.",
+    "sub_texto": "40 autores confirmados para a Feira do Livro 2025 em São Paulo",
+    "imagem_url": "img/noticia_feira_livro_sp.jpg",
+    "data": "26/03/2025",
+    "fonte": "UOL",
+    "link": "https://cultura.uol.com.br/entretenimento/noticias/2025/03/26/13140_feira-do-livro-anuncia-os-primeiros-40-autores-convidados-na-edicao-de-2025.html"
+  },
+  {
+    "id": "N2",
+    "titulo": "Brasil marca presença na vitrine do livro em Paris",
+    "texto": "A literatura brasileira está presente na maior vitrine editorial internacional: o Festival do Livro de Paris de 2025 traz uma delegação nacional forte, com escritores, tradutores e lançamentos apoiados pelo Ministério da Cultura.",
+    "sub_texto": "Brasil presente no Festival do Livro de Paris 2025",
+    "imagem_url": "img/noticia_paris_livro.jpg",
+    "data": "11/04/2025",
+    "fonte": "UOL",
+    "link": "https://noticias.uol.com.br/ultimas-noticias/rfi/2025/04/11/literatura-brasileira-marca-presenca-na-maior-vitrine-internacional-do-livro-de-paris.htm"
+  },
+  {
+    "id": "N3",
+    "titulo": "Brasil vai com grande delegação para a Feira do Livro de Frankfurt 2025",
+    "texto": "O Brazilian Publishers, em parceria com a Câmara Brasileira do Livro e a ApexBrasil, levará uma delegação brasileira à Feira do Livro de Frankfurt, um dos maiores eventos literários do mundo, com 27 empresas brasileiras participando.",
+    "sub_texto": "Delegação brasileira confirmada para Frankfurt 2025",
+    "imagem_url": "img/noticia_frankfurt.jpg",
+    "data": "08/10/2025",
+    "fonte": "CBL",
+    "link": "https://cbl.org.br/2025/10/brasil-marcara-presenca-na-feira-do-livro-de-frankfurt-2025-com-delegacao-apoiada-pelo-brazilian-publishers/"
+  }
 ]
+
 }
